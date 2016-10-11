@@ -1,4 +1,7 @@
 // app/routes.js
+
+const chatController = require('./controllers/chat');
+
 module.exports = function router(app, passport) {
     // =====================================
     // HOME PAGE (with login links) ========
@@ -44,10 +47,7 @@ module.exports = function router(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
   app.get('/profile', isLoggedIn, (req, res) => {
-    console.log('vamos al profile');
-    res.render('profile.ejs', {
-      user: req.user, // get the user out of session and pass to template
-    });
+    chatController.main(req, res);
   });
 
     // =====================================

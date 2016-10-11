@@ -13,7 +13,9 @@ const mongoose = require('mongoose');
 
 
 // mongodb ==================================================================
-mongoose.connect('database/mongo/url');
+const connectionString = require('./database/mongo//url');
+
+mongoose.connect(connectionString);
 // configuration ===============================================================
 
 require('./config/passport')(passport); // pass passport for configuration

@@ -33,7 +33,22 @@
 
             </div>
         </div>
+    </div>
 
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> Chat</h3>
+
+                <%for(let i = 0; i < places.length; i++) {%>
+                  <%= places[i].name %>
+                <% } %>
+
+
+            </div>
+        </div>
     </div>
 
 </div>
