@@ -9,8 +9,11 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const mongoose = require('mongoose');
 
 
+// mongodb ==================================================================
+mongoose.connect('database/mongo/url');
 // configuration ===============================================================
 
 require('./config/passport')(passport); // pass passport for configuration
