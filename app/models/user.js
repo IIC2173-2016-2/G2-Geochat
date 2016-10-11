@@ -1,6 +1,6 @@
 const pg = require('pg');
 const bcrypt = require('bcrypt-nodejs');
-const conString = require('../../config/database');
+const conString = require('../../database/sql/url');
 
 
 function User() {

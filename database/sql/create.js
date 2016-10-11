@@ -1,5 +1,5 @@
 const pg = require('pg');
-const connectionString = require('../config/database');
+const connectionString = require('./url');
 
 const client = new pg.Client(connectionString);
 client.connect();

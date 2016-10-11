@@ -9,25 +9,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const pg = require('pg');
 
-const conString = require('./config/database');
-
-console.log(conString);
-const client = new pg.Client(conString);
-
-client.connect((err) => {
-  if (err) {
-    return console.error('error conectado a bd');
-  }
-  client.query('SELECT NOW() AS "currentTime";', (err, result) => {
-    if (err) {
-      return console.error('error in query', err);
-    }
-    console.log(result.rows[0].currentTime);
-    return client.end();
-  });
-});
 
 // configuration ===============================================================
 
