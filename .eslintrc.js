@@ -11,6 +11,7 @@ module.exports = {
       "consistent-return": 0,
       "func-names": 0,
       "no-param-reassign": 0,
-      "new-cap": 0
+      "new-cap": 0,
+      "no-plusplus": 0
     }
 };
