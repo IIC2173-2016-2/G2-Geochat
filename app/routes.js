@@ -1,15 +1,17 @@
 // app/routes.js
 
 const chatController = require('./controllers/chat');
+const locateController = require('./controllers/locate');
 
 module.exports = function router(app, passport) {
 
   // Geolocation
   app.get('/geolocate', function(req, res){
-    var lat = req.query.lat;
-    var lon = req.query.lon;
-
-  });
+    locateController.main(req, res, {
+      lat: req.query.lat,
+      lon: req.query.lon
+      });
+    });
 
     // =====================================
     // HOME PAGE (with login links) ========

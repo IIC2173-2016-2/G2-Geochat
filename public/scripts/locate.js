@@ -1,5 +1,5 @@
 function geoLocation() {
-  var output = document.getElementById("rooms");
+  var output = document.getElementById("map");
 
   function success(position) {
     var latitude  = position.coords.latitude;
@@ -11,8 +11,17 @@ function geoLocation() {
       lat: latitude,
       lon: longitude
     };
+    // Get nearby places through foursquare api in the backend
     $.get( '/geolocate', parameters, function(data) {
-      $('#results').html(data);
+      console.log(data.places);
+      var $places= $('#places');
+      var $ul = $('<ul/>');
+      $ul.appendTo($places);
+      for(var i in data.places){
+        var $li = $('<li/>');
+        $li.text(data.places[i]);
+        $li.appendTo($ul);
+      }
     });
 
     var img = new Image();
@@ -26,6 +35,6 @@ function geoLocation() {
   };
 
   output.innerHTML = "<p>Locating…</p>";
-
   navigator.geolocation.getCurrentPosition(success, error);
 }
+$(geoLocation);

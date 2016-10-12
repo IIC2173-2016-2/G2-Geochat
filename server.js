@@ -12,11 +12,6 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 
 
-const CLIENTID = 'DB3WCAB4IXWLMJYXLQNNAGS0BTLFQU4BV053WSERRIW20NKV';
-const CLIENTSECRET = 'UQDYESVN1EFVYWWLV1V4JAN25C0NHAFX042X2OI1CF1SEW0C';
-const foursquare = require('node-foursquare-venues')(CLIENTID, CLIENTSECRET);
-
-
 // mongodb ==================================================================
 const connectionString = require('./database/mongo//url');
 
