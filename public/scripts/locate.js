@@ -7,6 +7,14 @@ function geoLocation() {
 
     output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
 
+    var parameters = { 
+      lat: latitude,
+      lon: longitude
+    };
+    $.get( '/geolocate', parameters, function(data) {
+      $('#results').html(data);
+    });
+
     var img = new Image();
     img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
 

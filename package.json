@@ -20,7 +20,8 @@
     "passport-local": "~0.1.6",
     "pg": "6.0.1",
     "serve-favicon": "~2.3.0",
-    "socket.io": "^1.5.0"
+    "socket.io": "^1.5.0",
+    "node-foursquare-venues": "latest"
   },
   "devDependencies": {
     "eslint": "^3.7.1",

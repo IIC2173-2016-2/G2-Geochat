@@ -3,6 +3,14 @@
 const chatController = require('./controllers/chat');
 
 module.exports = function router(app, passport) {
+
+  // Geolocation
+  app.get('/geolocate', function(req, res){
+    var lat = req.query.lat;
+    var lon = req.query.lon;
+
+  });
+
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
