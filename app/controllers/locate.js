@@ -4,16 +4,15 @@ exports.main = function (req, res, coords) {
   const foursquare = require('node-foursquare-venues')(CLIENT_ID, CLIENT_SECRET);
 
   foursquare.venues.search({
-    ll: `${coords.lat},${coords.lon}`
+    ll: `${coords.lat},${coords.lon}`,
   },
-    function(error, response){
-      var places = [];
-      for(var i in response.response.venues){
+    (error, response) => {
+      const places = [];
+      for (const i in response.response.venues) {
         places.push(response.response.venues[i].name);
       }
       res.send({
-        places: places
+        places,
       });
-  });
-
+    });
 };

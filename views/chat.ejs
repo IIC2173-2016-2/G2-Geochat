@@ -18,14 +18,13 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-    <script src="scripts/locate.js"></script>
     <script>
         var socket = io.connect('http://localhost:3000');
 
         // on connection to server, ask for user's name with an anonymous callback
         socket.on('connect', function() {
             // call the server-side function 'adduser' and send one parameter (value of prompt)
-            socket.emit('adduser','<%= user.username %>' );
+            socket.emit('adduser', '<%= user.username %>');
         });
 
         // listener, whenever the server emits 'updatechat', this updates the chat body
@@ -35,12 +34,14 @@
 
         // listener, whenever the server emits 'updaterooms', this updates the room the client is in
         socket.on('updaterooms', function(rooms, current_room) {
+          console.log("======================");
+            console.log(rooms);
             $('#rooms').empty();
             $.each(rooms, function(key, value) {
                 if (value == current_room) {
-                    $('#rooms').append('<div>' + value + '</div>');
+                    $('#rooms').append('<li>' + value + '</li>');
                 } else {
-                    $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>');
+                    $('#rooms').append('<li><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></li>');
                 }
             });
         });
@@ -68,6 +69,8 @@
             });
         });
     </script>
+    <script src="scripts/locate.js"></script>
+
 
 
     <div class="container">
@@ -104,40 +107,19 @@
             <!-- LOCAL INFORMATION -->
             <div class="col-sm-6">
                 <div class="well">
-                    <h3><span class="fa fa-user"></span> Rooms</h3>
-
-                    <div id="rooms">
-                        <% for(let i =0; i < places.length; i++) { %>
-                            <div>
-                                <a href="#" onclick="switchRoom('<%= places[i].name %>')">
-                                    <%= places[i].name %>
-                                </a>
-                            </div>
-                            <% } %>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="well">
                     <h3><span class="fa fa-user"></span> Places</h3>
 
                     <div id="map">
-                        
+
                     </div>
-                    <div id="places">
-                        
-                    </div>
+                    <ul id="rooms">
+
+                    </ul>
                 </div>
             </div>
 
-        </div>
-
-        <div>
-            <div class="row">
-
-                <!-- LOCAL INFORMATION -->
-                <div class="col-sm-6">
-                  <div class="well">
+            <div class="col-sm-6">
+                <div class="well">
                     <h3><span class="fa fa-user"></span> Chat</h3>
 
                     <div>
@@ -145,11 +127,14 @@
                         <input id="data" style="width:200px;" />
                         <input type="button" id="datasend" value="send" />
                     </div>
-                  </div>
-
                 </div>
 
             </div>
+
+        </div>
+
+        <div>
+
 
 
 </body>
