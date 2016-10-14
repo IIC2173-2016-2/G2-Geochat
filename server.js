@@ -51,6 +51,8 @@ const chat = require('./config/chat.js');
 
 chat.initialize(io);
 
+console.log(`The magic happens in port: ${port}`);
+
 
 // // usernames which are currently connected to the chat
 // const usernames = {};
