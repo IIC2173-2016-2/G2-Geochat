@@ -100,6 +100,23 @@ module.exports = function router(app, passport) {
     req.logout();
     res.redirect('/');
   });
+
+
+  // =====================================
+  // arquicoins  =========================
+  // =====================================
+
+  app.post('/user/:id/buy/arquicoins', hasAccess, (req, res) => {
+    userController.buyArquicoins(req, res);
+  });
+
+  app.post('/user/:id/buy/something', hasAccess, (req, res) => {
+    userController.spendArquicoins(req, res);
+  });
+
+  app.post('/user/:id/transfer/arquicoins', hasAccess, (req, res) => {
+    userController.transferArquicoins(req, res);
+  });
 };
 
 // route middleware to make sure a user is logged in

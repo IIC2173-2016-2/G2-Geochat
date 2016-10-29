@@ -80,7 +80,7 @@
     </script>
     <script src="scripts/locate.js"></script>
 
-    <div class="container">
+    <div class="container" ng-controller="userController">
 
       <div class="page-header text-center">
         <h1>
@@ -89,7 +89,46 @@
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
       </div>
 
-      <div class="row" ng-controller="userController" ng-init="initialize('<%= JSON.stringify(user) %>')">
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="well">
+            <h3>
+              <span class="fa fa-money"></span>
+              Comprar Arquicoins</h3>
+
+            <a ng-click="buyArquicoins()" class=" btn btn-default btn-sm">
+              Comprar 100 arquicoins</a>
+
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <h3>
+              <span class="fa fa-money"></span>
+              Comprar Algo</h3>
+
+            <a ng-click="spendArquicoins()" class=" btn btn-default btn-sm">
+              Gastar 80 arquicoins</a>
+
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="well">
+            <h3>
+              <span class="fa fa-exchange"></span>
+              Transferir</h3>
+
+            <a ng-click="buyArquicoins()" class=" btn btn-default btn-sm">
+              Comprar 100 arquicoins</a>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row" ng-init="initialize('<%= JSON.stringify(user) %>')">
 
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-6">
@@ -175,7 +214,7 @@
             </div>
             <div class="panel-group">
               <div class="panel panel-default" ng-repeat="card in cards">
-                <div class="panel-heading" ng-init ="parseDateOfCard(card)">
+                <div class="panel-heading" ng-init="parseDateOfCard(card)">
                   <h4 class="panel-title">
 
                     <a data-toggle="collapse" data-parent="#accordion" href="#card{{card.id}}">

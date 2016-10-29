@@ -48,7 +48,6 @@ class Table {
   }
 
   save(entry) {
-    console.log('llego a save');
     const errorString = 'Something went wrong';
     return new Promise((resolve, reject) => {
       this.parseAttributesForUpsert(entry, true)
@@ -70,7 +69,6 @@ class Table {
   }
 
   update(id, attr) {
-    console.log(attr);
     const errorString = 'Something went wrong';
     return new Promise((resolve, reject) => {
       if (attr && attr.id && id.toString() !== attr.id.toString()) {
@@ -82,7 +80,6 @@ class Table {
             id,
           }).update(attributes).returning('*')
             .then((entry) => {
-              console.log(entry);
               // check if attributes is an array
               if (!entry || entry.length === 0) {
                 return reject(errorString);

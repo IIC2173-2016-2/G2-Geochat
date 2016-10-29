@@ -15,3 +15,7 @@ exports.isEmptyJSON = function (x) {
   }
   return Object.keys(x).length === 0;
 };
+
+exports.isInteger = function isInt(value) {
+  return !isNaN(value) && (function (x) { return (x | 0) === x; }(parseFloat(value)));
+};

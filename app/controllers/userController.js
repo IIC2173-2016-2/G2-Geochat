@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const KreditCard = require('../models/kreditcard');
+const Transaction = require('../models/transaction');
 
 exports.userExists = function (req, res) {
   const username = req.params.username.toString();
@@ -45,5 +46,43 @@ exports.getKreditCards = function (req, res) {
     });
   }).catch((err) => {
     return res.status(500).send(err);
+  });
+};
+
+exports.buyArquicoins = function (req, res) {
+  const url_id = req.params.id.toString();
+  const id = req.body.id.toString();
+  const amount = req.body.amount;
+  if (id !== url_id || !id) {
+    return res.status(400).send('IDs no coinciden');
+  }
+  Transaction.buyArquicoins(id, amount).then((user) => {
+    if (!user) {
+      return res.status(500).send('Something went wrong');
+    }
+    return res.status(200).send({
+      user,
+    });
+  }).catch((err) => {
+    return res.status(400).send(err);
+  });
+};
+
+exports.spendArquicoins = function (req, res) {
+  const url_id = req.params.id.toString();
+  const id = req.body.id.toString();
+  const amount = req.body.cost;
+  if (id !== url_id || !id) {
+    return res.status(400).send('IDs no coinciden');
+  }
+  Transaction.spendArquicoins(id, amount).then((user) => {
+    if (!user) {
+      return res.status(500).send('Something went wrong');
+    }
+    return res.status(200).send({
+      user,
+    });
+  }).catch((err) => {
+    return res.status(400).send(err);
   });
 };

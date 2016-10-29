@@ -3,8 +3,8 @@
 controllers
 
   .controller('userController', function($scope, $http) {
-    $scope.showEdit = false;
-    $scope.newCardForm = false;
+  $scope.showEdit = false;
+  $scope.newCardForm = false;
 
   $scope.user;
   $scope.newUser;
@@ -25,6 +25,11 @@ controllers
       toJSON[key] = fromJSON[key];
     })
     return toJSON;
+  }
+
+  $scope.setArquicoins = function(amount) {
+    console.log(amount);
+    $scope.user.arquicoins = amount;
   }
 
   $scope.triggerShowEdit = function() {
@@ -83,7 +88,7 @@ controllers
       });
   }
   $scope.addCard = function() {
-      $scope.newCard.user_id = $scope.user.id;
+    $scope.newCard.user_id = $scope.user.id;
     $http.post(`/user/${$scope.user.id}/card/new`, $scope.newCard)
       .success(function(data) {
         $scope.cards.push(data.card);
@@ -107,10 +112,10 @@ controllers
       });
   }
 
-function removeCard(card) {
-  const index = $scope.cards.indexOf(card);
-  $scope.cards.splice(index, 1);
-}
+  function removeCard(card) {
+    const index = $scope.cards.indexOf(card);
+    $scope.cards.splice(index, 1);
+  }
 
 
   $scope.delete = function(card) {
@@ -120,6 +125,43 @@ function removeCard(card) {
       })
       .error(function(err) {
         console.log(err);
+      });
+  }
+
+
+
+  ///MONEY
+
+  $scope.buyArquicoins = function() {
+    const id = $scope.user.id;
+    const amount = 100;
+    // $scope.setArquicoins(amount);
+    $http.post(`/user/${id}/buy/arquicoins`, {
+        id: $scope.user.id,
+        amount,
+      })
+      .success(function(data) {
+        $scope.setArquicoins($scope.user.arquicoins + amount);
+
+        // $scope.user.arquicoins = data.user.arquicoins;
+      })
+      .error(function(err) {
+        $scope.moneyMessage = err;
+      });
+  }
+
+  $scope.spendArquicoins = function() {
+    const id = $scope.user.id;
+    const cost = 80;
+    $http.post(`/user/${id}/buy/something`, {
+        id: $scope.user.id,
+        cost,
+      })
+      .success(function(data) {
+        $scope.setArquicoins($scope.user.arquicoins - cost);
+      })
+      .error(function(err) {
+        $scope.moneyMessage = err;
       });
   }
 });
