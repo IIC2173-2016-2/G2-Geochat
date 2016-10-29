@@ -39,7 +39,6 @@ module.exports = function auth(passport) {
     passReqToCallback: true, // allows us to pass back the entire request to the callback
   },
         (req, username, password, done) => {
-          console.log(req.body);
             // asynchronous
             // User.findOne wont fire unless data is sent back
           process.nextTick(() => {
@@ -101,7 +100,6 @@ module.exports = function auth(passport) {
             if (err) {
               return done(err);
             }
-            console.log(user);
                 // if no user is found, return the message
             if (!user) {
               return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash

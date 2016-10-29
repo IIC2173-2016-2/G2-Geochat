@@ -64,7 +64,7 @@ module.exports = function router(app, passport) {
     chatController.main(req, res);
   });
 
-  app.put('/user/:id/update', isLoggedIn, (req, res) => {
+  app.put('/user/:id/update', hasAccess, (req, res) => {
     userController.update(req, res);
   });
 
@@ -82,13 +82,30 @@ module.exports = function router(app, passport) {
 };
 
 // route middleware to make sure a user is logged in
+function hasAccess(req, res, next) {
+  const urlId = req.params.id.toString();
+  const loggedId = req.session.passport.user.toString();
+  const bodyId = req.body.id.toString();
+  console.log(urlId);
+  console.log(loggedId);
+  console.log(bodyId);
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated() && (urlId === loggedId && bodyId === loggedId)) {
+    return next();
+  }
+  req.logout();
+  // if they aren't redirect them to the home page
+  res.status(403).send('You dont have permission to edit this user');
+}
+
+// route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-  console.log(req);
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated()) {
     return next();
   }
 
   // if they aren't redirect them to the home page
+  req.logout();
   res.redirect('/');
 }

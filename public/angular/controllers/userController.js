@@ -33,9 +33,6 @@ controllers
     const username = $scope.newUser.username;
     $http.get(`/user/${username}/exists`)
       .success(function(data) {
-        console.log($scope.user.username);
-        console.log(username);
-        console.log(data);
         if (!data.exists || username === $scope.user.username) {
           $http.put(`/user/${$scope.newUser.id}/update`, $scope.newUser)
             .success(function(data) {

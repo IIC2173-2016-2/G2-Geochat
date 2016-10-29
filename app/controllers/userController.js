@@ -5,8 +5,6 @@ exports.userExists = function (req, res) {
   // get all places
   User.findOne(username, (err, user) => {
     if (err) {
-      console.log('----');
-      console.log(err);
       return res.status(500).send(err);
     }
     if (!user) {
@@ -22,9 +20,7 @@ exports.userExists = function (req, res) {
 
 exports.update = function (req, res) {
   const urlId = req.params.id.toString();
-  console.log('-------------------');
-  console.log(req);
-  console.log('--------------------------');
+
   const id = req.body.id.toString();
   if (urlId !== id) {
     return res.status(400).send('IDs do not match');
