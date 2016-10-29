@@ -33,6 +33,7 @@ function User() {
     });
   };
 
+
   this.setAttributes = function (attributes) {
     Object.keys(attributes).forEach((key) => {
       this[key] = attributes[key];
@@ -49,6 +50,55 @@ function User() {
     return bcrypt.compareSync(password, this.password);
   };
 }
+
+function parseJsonToParams(json) {
+  const params = {
+    keys: [],
+    values: [],
+  };
+  // try, it will fail if json is not a json
+  try {
+    for (let i = 0; i < Object.keys(json).length; i++) {
+      params.keys.push(Object.keys(json)[i]);
+      params.values.push(json[Object.keys(json)[i]]);
+    }
+  } catch (e) {
+    return params;
+  }
+  return params;
+}
+
+User.update = function (id, attributes, callback) {
+  if (attributes.id) {
+    delete attributes.id;
+  }
+  const params = parseJsonToParams(attributes);
+  let query = 'UPDATE  users SET';
+  for (let j = 0; j < params.keys.length; j++) {
+    query += ` ${params.keys[j]} =($${(j + 1)}),`;
+  }
+  // delete the last ","
+  query = query.substring(0, query.length - 1);
+
+  query += ` WHERE id=($${(params.keys.length + 1)}`;
+  query += ') RETURNING *;';
+  const client = new pg.Client(conString);
+  client.connect();
+
+  params.values.push(id);
+  client.query(query, params.values, (err, result) => {
+    if (err) {
+      console.error('error running query', err);
+      return callback(err, null);
+    }
+
+    const user = new User();
+    user.setAttributes(result.rows[0]);
+    client.end();
+    // no error
+    return callback(null, user);
+  });
+};
 
 User.findOne = function (username, callback) {
   const client = new pg.Client(conString);

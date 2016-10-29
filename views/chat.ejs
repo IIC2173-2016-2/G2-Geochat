@@ -6,6 +6,9 @@
     <title>Node Authentication</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
       body {
         padding-top: 80px;
@@ -14,7 +17,6 @@
 
     </style>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="/angular/app.js"></script>
     <script src="/angular/controllers/controller.js"></script>
@@ -24,7 +26,6 @@
   <body ng-app="app">
 
     <script src="/socket.io/socket.io.js"></script>
-
 
     <script>
       var socket = io.connect('http://localhost:3000');
@@ -42,8 +43,7 @@
 
       // listener, whenever the server emits 'updaterooms', this updates the room the client is in
       socket.on('updaterooms', function (rooms, current_room) {
-        console.log("======================");
-        console.log(rooms);
+
         $('#rooms').empty();
         $.each(rooms, function (key, value) {
           if (value == current_room) {
@@ -88,38 +88,69 @@
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
       </div>
 
-      <div class="row">
+      <div class="row" ng-controller="userController" ng-init="initialize('<%= JSON.stringify(user) %>')">
 
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-6">
-          <div class="well">
+          <div class="well" ng-if="!showEdit">
+            <div ng-if="message" class="alert alert-success">
+              {{message}}
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
             <h3>
               <span class="fa fa-user"></span>
               Local</h3>
 
             <p>
               <strong>id</strong>:
-              <%= user.id %>
+              {{user.id}}
               <br/>
               <strong>username</strong>:
-              <%= user.username %>
+              {{ user.username }}
               <br>
               <strong>Dirección
               </strong>:
-              <%= user.address %>
+              {{ user.address }}
               <br/>
               <strong>Grupo Sanguíneo
               </strong>:
-              <%= user.bloodtype %>
+              {{ user.bloodtype }}
               <br/>
               <strong>Fecha de nacimiento:
               </strong>:
-              <%= user.birthday %>
+              {{ user.birthday | date }}
               <br/>
               <strong>arquicoins</strong>:
-              <%= user.arquicoins %><br>
+              {{ user.arquicoins }}<br>
             </p>
-            <a href="/user/<%=user.id%>/edit" class="btn btn-default btn-sm">Editar</a>
+            <a ng-click="triggerShowEdit()" class="btn btn-default btn-sm">Editar</a>
+
+          </div>
+          <div class="well" ng-if="showEdit">
+            <div ng-if="message" class="alert alert-danger">{{message}}</div>
+
+            <h3>
+              <span class="fa fa-user"></span>
+              Local</h3>
+
+            <div class="form-group">
+              <label>username</label>
+              <input type="text" class="form-control" name="username" ng-model="newUser.username">
+            </div>
+            <div class="form-group">
+              <label>Grupo sanguineo</label>
+              <input type="text" class="form-control" name="bloodtype" ng-model="newUser.bloodtype">
+            </div>
+            <div class="form-group">
+              <label>Direccion</label>
+              <input type="text" class="form-control" name="address" ng-model="newUser.address">
+            </div>
+            <div class="form-group">
+              <label>Fecha nacimiento</label>
+              <input type="date" class="form-control" name="birthday" ng-model="newUser.birthday">
+            </div>
+            <a ng-click="save()" class="btn btn-default btn-sm">Guardar Cambios</a>
+            <a ng-click="triggerShowEdit()" class="btn btn-default btn-sm">Cancelar</a>
 
           </div>
         </div>
