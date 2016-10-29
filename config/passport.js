@@ -39,6 +39,7 @@ module.exports = function auth(passport) {
     passReqToCallback: true, // allows us to pass back the entire request to the callback
   },
         (req, username, password, done) => {
+          console.log(req.body);
             // asynchronous
             // User.findOne wont fire unless data is sent back
           process.nextTick(() => {
@@ -61,6 +62,11 @@ module.exports = function auth(passport) {
               // set the user's local credentials
               newUser.username = username;
               newUser.password = newUser.generateHash(password);
+              newUser.address = req.body.address;
+              newUser.bloodtype = req.body.bloodtype;
+              if ((new Date(req.body.birthday) !== 'Invalid Date' && !isNaN(new Date(req.body.birthday)))) {
+                newUser.birthday = req.body.birthday;
+              }
 
               // save the user
               newUser.save((err, user) => {

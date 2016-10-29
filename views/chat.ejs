@@ -2,141 +2,169 @@
 <!doctype html>
 <html>
 
-<head>
+  <head>
     <title>Node Authentication</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
-        body {
-            padding-top: 80px;
-            word-wrap: break-word;
-        }
-    </style>
-</head>
+      body {
+        padding-top: 80px;
+        word-wrap: break-word;
+      }
 
-<body>
+    </style>
+  </head>
+
+  <body>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
     <script>
-        var socket = io.connect('http://localhost:3000');
+      var socket = io.connect('http://localhost:3000');
 
-        // on connection to server, ask for user's name with an anonymous callback
-        socket.on('connect', function() {
-            // call the server-side function 'adduser' and send one parameter (value of prompt)
-            socket.emit('adduser', '<%= user.username %>');
+      // on connection to server, ask for user's name with an anonymous callback
+      socket.on('connect', function () {
+        // call the server-side function 'adduser' and send one parameter (value of prompt)
+        socket.emit('adduser', '<%= user.username %>');
+      });
+
+      // listener, whenever the server emits 'updatechat', this updates the chat body
+      socket.on('updatechat', function (username, data) {
+        $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
+      });
+
+      // listener, whenever the server emits 'updaterooms', this updates the room the client is in
+      socket.on('updaterooms', function (rooms, current_room) {
+        console.log("======================");
+        console.log(rooms);
+        $('#rooms').empty();
+        $.each(rooms, function (key, value) {
+          if (value == current_room) {
+            $('#rooms').append('<li>' + value + '</li>');
+          } else {
+            $('#rooms').append('<li><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></li>');
+          }
+        });
+      });
+
+      function switchRoom(room) {
+        socket.emit('switchRoom', room);
+      }
+
+      // on load of page
+      $(function () {
+        // when the client clicks SEND
+        $('#datasend').click(function () {
+          var message = $('#data').val();
+          $('#data').val('');
+          // tell server to execute 'sendchat' and send along one parameter
+          socket.emit('sendchat', message);
         });
 
-        // listener, whenever the server emits 'updatechat', this updates the chat body
-        socket.on('updatechat', function(username, data) {
-            $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
+        // when the client hits ENTER on their keyboard
+        $('#data').keypress(function (e) {
+          if (e.which == 13) {
+            $(this).blur();
+            $('#datasend').focus().click();
+          }
         });
-
-        // listener, whenever the server emits 'updaterooms', this updates the room the client is in
-        socket.on('updaterooms', function(rooms, current_room) {
-          console.log("======================");
-            console.log(rooms);
-            $('#rooms').empty();
-            $.each(rooms, function(key, value) {
-                if (value == current_room) {
-                    $('#rooms').append('<li>' + value + '</li>');
-                } else {
-                    $('#rooms').append('<li><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></li>');
-                }
-            });
-        });
-
-        function switchRoom(room) {
-            socket.emit('switchRoom', room);
-        }
-
-        // on load of page
-        $(function() {
-            // when the client clicks SEND
-            $('#datasend').click(function() {
-                var message = $('#data').val();
-                $('#data').val('');
-                // tell server to execute 'sendchat' and send along one parameter
-                socket.emit('sendchat', message);
-            });
-
-            // when the client hits ENTER on their keyboard
-            $('#data').keypress(function(e) {
-                if (e.which == 13) {
-                    $(this).blur();
-                    $('#datasend').focus().click();
-                }
-            });
-        });
+      });
     </script>
     <script src="scripts/locate.js"></script>
 
-
-
     <div class="container">
 
-        <div class="page-header text-center">
-            <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-            <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+      <div class="page-header text-center">
+        <h1>
+          <span class="fa fa-anchor"></span>
+          Profile Page</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+      </div>
+
+      <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+          <div class="well">
+            <h3>
+              <span class="fa fa-user"></span>
+              Local</h3>
+
+            <p>
+              <strong>id</strong>:
+              <%= user.id %> <br/>
+              <strong>username</strong>:
+              <%= user.username %> <br>
+              <strong>Dirección </strong>:
+              <%= user.address %> <br/>
+              <strong>Grupo Sanguíneo </strong>:
+              <%= user.bloodtype %> <br/>
+              <strong>Fecha de nacimiento: </strong>:
+              <%= user.birthday %> <br/>
+              <strong>arquicoins</strong>:
+              <%= user.arquicoins %><br>
+            </p>
+            <a href="/user/<%=user.id%>/edit" class="btn btn-default btn-sm">Editar</a>
+
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="well">
+            <h3>
+              <span class="fa fa-credit-card"></span>
+              Tarjetas</h3>
+
+            <p>
+              <strong>id</strong>:
+              <%= user.id %> <br/>
+              <strong>username</strong>:
+              <%= user.username %> <br>
+              <strong>Dirección </strong>:
+              <%= user.address %> <br/>
+              <strong>Grupo Sanguíneo </strong>:
+              <%= user.bloodtype %> <br/>
+              <strong>Fecha de nacimiento: </strong>:
+              <%= user.birthday %> <br/>
+              <strong>arquicoins</strong>:
+              <%= user.arquicoins %><br>
+            </p>
+            <a href="/user/<%=user.id%>/card/new" class="btn btn-default btn-sm">Agregar</a>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+          <div class="well">
+            <h3>
+              <span class="fa fa-comments"></span>
+              Places</h3>
+
+            <div id="map"></div>
+            <ul id="rooms"></ul>
+          </div>
         </div>
 
-        <div class="row">
+        <div class="col-sm-6">
+          <div class="well">
+            <h3>
+              <span class="fa fa-comment"></span>
+              Chat</h3>
 
-            <!-- LOCAL INFORMATION -->
-            <div class="col-sm-6">
-                <div class="well">
-                    <h3><span class="fa fa-user"></span> Local</h3>
-
-                    <p>
-                        <strong>id</strong>:
-                        <%= user.id %><br>
-                            <strong>username</strong>:
-                            <%= user.username %><br>
-                                <strong>password</strong>:
-                                <%= user.password %>
-                                    <strong>arquicoins</strong>:
-                                    <%= user.arquicoins %><br>
-                    </p>
-
-                </div>
+            <div>
+              <div id="conversation"></div>
+              <input id="data" style="width:200px;"/>
+              <input type="button" id="datasend" value="send"/>
             </div>
-        </div>
-
-        <div class="row">
-
-            <!-- LOCAL INFORMATION -->
-            <div class="col-sm-6">
-                <div class="well">
-                    <h3><span class="fa fa-user"></span> Places</h3>
-
-                    <div id="map">
-
-                    </div>
-                    <ul id="rooms">
-
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-sm-6">
-                <div class="well">
-                    <h3><span class="fa fa-user"></span> Chat</h3>
-
-                    <div>
-                        <div id="conversation"></div>
-                        <input id="data" style="width:200px;" />
-                        <input type="button" id="datasend" value="send" />
-                    </div>
-                </div>
-
-            </div>
+          </div>
 
         </div>
 
-        <div>
+      </div>
 
+      <div></body>
 
-
-</body>
-
-</html>
+    </html>
