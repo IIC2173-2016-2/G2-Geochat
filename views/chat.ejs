@@ -4,6 +4,7 @@
 
   <head>
     <title>Node Authentication</title>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -159,7 +160,6 @@
             <h3>
               <span class="fa fa-credit-card"></span>
               Tarjetas</h3>
-
             <div ng-if="!cards">
               <div ng-if="cardMessage" class="alert alert-danger">
                 {{cardMessage}}
@@ -173,11 +173,74 @@
             <div ng-if="cards.length === 0" class="alert alert-info">
               El usuario no tiene tarjetas de kredito
             </div>
-            <ul>
-              <li ng-repeat="card in cards">
-                {{card.number }}
-              </li>
-            </ul>
+            <div class="panel-group">
+              <div class="panel panel-default" ng-repeat="card in cards">
+                <div class="panel-heading" ng-init ="parseDateOfCard(card)">
+                  <h4 class="panel-title">
+
+                    <a data-toggle="collapse" data-parent="#accordion" href="#card{{card.id}}">
+                      {{card.number}}
+                      <small>
+                        (Operador:
+                        {{card.operator}})
+                      </small>
+                    </a>
+
+                  </h4>
+                </div>
+                <!-- /.panel-heading -->
+                <div id="card{{card.id}}" class="panel-collapse collapse">
+                  <div ng-if="!card.edit">
+                    <ul>
+                      <li>Operador:
+                        {{card.operator}}</li>
+                      <li>Fecha de expiración:
+                        {{card.expire_date | date}}</li>
+                      <li>Nombre en tarjeta:
+                        {{card.name_on_card}}</li>
+                    </ul>
+                    <a ng-click="toggleEditCard(card)" class=" btn btn-default btn-sm">
+                      Editar tarjeta</a>
+                    <a ng-click="delete(card)" class=" btn btn-default btn-sm">
+                      Eliminar tarjeta</a>
+                  </div>
+                  <div ng-if="card.edit">
+                    <div class="form-group">
+                      <label>Numero</label>
+                      <input type="text" class="form-control" name="number" ng-model="card.number">
+                      <div ng-if="!card.number" class="alert alert-danger">
+                        Debe tener un operador
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Operador</label>
+                      <input placeholder="RedKompra" type="text" class="form-control" name="operator" ng-model="card.operator">
+                      <div ng-if="!card.operator" class="alert alert-danger">
+                        Debe tener un operador
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Nombre tal cual sale en la tarjeta</label>
+                      <input type="text" class="form-control" name="name_on_card" ng-model="card.name_on_card">
+                      <div ng-if="!card.name_on_card" class="alert alert-danger">
+                        Debe tener un nombre
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Fecha expiracion</label>
+                      <input type="date" class="form-control" name="expire_date" ng-model="card.expire_date">
+                      <div ng-if="!card.expire_date" class="alert alert-danger">
+                        Debe tener un fecha de expiración
+                      </div>
+                    </div>
+                    <a ng-if="!(!card.expire_date || !card.name_on_card || !card.number || !card.operator)" ng-click="updateCard(card)" class=" btn btn-default btn-sm">Guardar Cambios</a>
+                    <a ng-if="!card.expire_date || !card.name_on_card || !card.number || !card.operator" class=" btn btn-default btn-sm" disabled>Guardar Cambios</a>
+                    <a ng-click="toggleEditCard(card)" class=" btn btn-default btn-sm">
+                      Cancelar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div ng-if="newCardForm" class="well">
 
               <div class="form-group">
@@ -215,7 +278,8 @@
               <a ng-click="toggleNewCardForm()" class=" btn btn-default btn-sm">cancelar</a>
 
             </div>
-            <a ng-if="!newCardForm" ng-click="toggleNewCardForm()" class=" btn btn-default btn-sm"> Agregar Nueva tarjeta</a>
+            <a ng-if="!newCardForm" ng-click="toggleNewCardForm()" class=" btn btn-default btn-sm">
+              Agregar Nueva tarjeta</a>
 
           </div>
         </div>

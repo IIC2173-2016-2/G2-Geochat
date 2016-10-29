@@ -37,6 +37,14 @@ controllers
     $scope.newCardForm = !$scope.newCardForm;
   }
 
+  $scope.parseDateOfCard = function(card) {
+    card.expire_date = new Date(card.expire_date);
+  }
+
+  $scope.toggleEditCard = function(card) {
+    card.edit = !card.edit;
+  }
+
   $scope.save = function() {
     const username = $scope.newUser.username;
     $http.get(`/user/${username}/exists`)
@@ -85,6 +93,33 @@ controllers
       .error(function(err) {
         console.log('meneh');
         $scope.cardMessage = err;
+      });
+  }
+  $scope.updateCard = function(card) {
+    delete card.edit;
+    $http.post(`/user/${$scope.user.id}/card/${card.id}/update`, card)
+      .success(function(data) {
+        card = data.card;
+        card.edit = false;
+      })
+      .error(function(err) {
+        console.log(err);
+      });
+  }
+
+function removeCard(card) {
+  const index = $scope.cards.indexOf(card);
+  $scope.cards.splice(index, 1);
+}
+
+
+  $scope.delete = function(card) {
+    $http.post(`/user/${$scope.user.id}/card/${card.id}/delete`, card)
+      .success(function(data) {
+        removeCard(card);
+      })
+      .error(function(err) {
+        console.log(err);
       });
   }
 });

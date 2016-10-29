@@ -1,8 +1,33 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+.red{
+  color: rgb(207,83,83)
 }
 
-a {
-  color: #00B7FF;
+.dark-red{
+  color: rgb(158, 61, 60);
+}
+
+.green{
+  color: rgb(91, 184, 93);
+}
+
+.dark-green{
+  color: rgb(45, 92, 46);
+}
+
+.yellow{
+  color: yellow;
+}
+
+.orange{
+  color: rgb(242, 172, 74);
+}
+
+.blue{
+  color: rgb(52, 122, 182);
+}
+
+.icon-list-holder{
+  margin: 3px;
+  padding: 3px;
 }

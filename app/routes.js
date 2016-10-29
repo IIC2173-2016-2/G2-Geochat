@@ -79,6 +79,16 @@ module.exports = function router(app, passport) {
     cardController.create(req, res);
   });
 
+  // eslint-disable-next-line
+  app.post('/user/:id/card/:card_id/update', hasAccess, (req, res) => {
+    cardController.update(req, res);
+  });
+
+// eslint-disable-next-line
+  app.post('/user/:id/card/:card_id/delete', hasAccess, (req, res) => {
+    cardController.delete(req, res);
+  });
+
   app.get('/user/:username/exists', (req, res) => {
     userController.userExists(req, res);
   });
