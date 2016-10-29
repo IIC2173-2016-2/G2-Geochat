@@ -60,12 +60,17 @@ module.exports = function router(app, passport) {
   // =====================================
   // we will want this protected so you have to be logged in to visit
   // we will use route middleware to verify this (the isLoggedIn function)
+  // eslint-disable-next-line
   app.get('/profile', isLoggedIn, (req, res) => {
     chatController.main(req, res);
   });
-
+  // eslint-disable-next-line
   app.put('/user/:id/update', hasAccess, (req, res) => {
     userController.update(req, res);
+  });
+  // eslint-disable-next-line
+  app.get('/user/:id/fetchCards', hasAccess, (req, res) => {
+    userController.getKreditCards(req, res);
   });
 
   app.get('/user/:username/exists', (req, res) => {
@@ -85,12 +90,10 @@ module.exports = function router(app, passport) {
 function hasAccess(req, res, next) {
   const urlId = req.params.id.toString();
   const loggedId = req.session.passport.user.toString();
-  const bodyId = req.body.id.toString();
   console.log(urlId);
   console.log(loggedId);
-  console.log(bodyId);
   // if user is authenticated in the session, carry on
-  if (req.isAuthenticated() && (urlId === loggedId && bodyId === loggedId)) {
+  if (req.isAuthenticated() && (urlId === loggedId)) {
     return next();
   }
   req.logout();

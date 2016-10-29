@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const KreditCard = require('../models/kreditcard');
 
 exports.userExists = function (req, res) {
   const username = req.params.username.toString();
@@ -32,6 +33,18 @@ exports.update = function (req, res) {
     }
     return res.status(200).send({
       user,
+    });
+  });
+};
+
+exports.getKreditCards = function (req, res) {
+  const urlId = req.params.id.toString();
+  KreditCard.findFromUser(urlId, (err, cards) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    return res.status(200).send({
+      cards,
     });
   });
 };

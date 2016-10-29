@@ -154,35 +154,68 @@
 
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" ng-init="fetchCards()">
           <div class="well">
             <h3>
               <span class="fa fa-credit-card"></span>
               Tarjetas</h3>
 
-            <p>
-              <strong>id</strong>:
-              <%= user.id %>
-              <br/>
-              <strong>username</strong>:
-              <%= user.username %>
-              <br>
-              <strong>Dirección
-              </strong>:
-              <%= user.address %>
-              <br/>
-              <strong>Grupo Sanguíneo
-              </strong>:
-              <%= user.bloodtype %>
-              <br/>
-              <strong>Fecha de nacimiento:
-              </strong>:
-              <%= user.birthday %>
-              <br/>
-              <strong>arquicoins</strong>:
-              <%= user.arquicoins %><br>
-            </p>
-            <a href="/user/<%=user.id%>/card/new" class="btn btn-default btn-sm">Agregar</a>
+            <div ng-if="!cards">
+              <div ng-if="cardMessage" class="alert alert-danger">
+                {{cardMessage}}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              </div>
+
+              <h1 class="text-center">
+                <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+              </h1>
+            </div>
+            <div ng-if="cards.length === 0" class="alert alert-info">
+              El usuario no tiene tarjetas de kredito
+            </div>
+            <ul>
+              <li ng-repeat="card in cards">
+                card.number
+              </li>
+            </ul>
+            <div ng-if="newCardForm" class="well">
+
+              <div class="form-group">
+                <label>Número</label>
+                <input type="text" class="form-control" name="number" ng-model="newCard.number">
+                <div ng-if="!newCard.number" class="alert alert-danger">
+                  Debe tener un número
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Operador</label>
+                <input placeholder="RedKompra" type="text" class="form-control" name="operator" ng-model="newCard.operator">
+                <div ng-if="!newCard.operator" class="alert alert-danger">
+                  Debe tener un operador
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Nombre tal cual sale en la tarjeta</label>
+                <input type="text" class="form-control" name="name_on_card" ng-model="newCard.name_on_card">
+                <div ng-if="!newCard.name_on_card" class="alert alert-danger">
+                  Debe tener un nombre
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Fecha expiracion</label>
+                <input type="date" class="form-control" name="expire_date" ng-model="newCard.expire_date">
+                <div ng-if="!newCard.expire_date" class="alert alert-danger">
+                  Debe tener un fecha de expiración
+                </div>
+              </div>
+              <a ng-if="!(!newCard.expire_date || !newCard.name_on_card || !newCard.number || !newCard.operator)" ng-click="addCard()" class=" btn btn-default btn-sm">Agregar</a>
+              <a ng-if="!newCard.expire_date || !newCard.name_on_card || !newCard.number || !newCard.operator" class=" btn btn-default btn-sm" disabled>Agregar</a>
+
+              <a ng-click="toggleNewCardForm()" class=" btn btn-default btn-sm">cancelar</a>
+
+            </div>
+            <a ng-if="!newCardForm" ng-click="toggleNewCardForm()" class=" btn btn-default btn-sm"> Agregar Nueva tarjeta</a>
 
           </div>
         </div>
@@ -218,7 +251,7 @@
         </div>
 
       </div>
+    </div>
+  </body>
 
-      <div></body>
-
-    </html>
+</html>

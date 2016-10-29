@@ -21,7 +21,7 @@ queries[queries.length - 1].on('end', () => {
   closeConnection();
 });
 
-queries.push(client.query('CREATE TABLE kreditcards(id BIGSERIAL PRIMARY KEY ,number VARCHAR(200) NOT NULL,name_on_card text, expire_date date, user_id BIGINT references users(id) ) '));
+queries.push(client.query('CREATE TABLE kreditcards(id BIGSERIAL PRIMARY KEY ,number VARCHAR(200) NOT NULL, operator text NOT NULL, name_on_card text NOT NULL, expire_date date NOT NULL, user_id BIGINT references users(id) ) '));
 queries[queries.length - 1].on('end', () => {
         // client.end();
   console.log('Table kreditcards created');
