@@ -66,10 +66,8 @@ module.exports = function auth(passport) {
               }
               // save the user
               User.save(newUser).then((user) => {
-                console.log('************************************************************');
                 return done(null, user);
               }).catch((err) => {
-                console.log('cayo en el catch');
                 if (err) {
                   return done(req.flash('signupMessage', err));
                 }
@@ -99,7 +97,6 @@ module.exports = function auth(passport) {
     passReqToCallback: true, // allows us to pass back the entire request to the callback
   },
     (req, username, password, done) => {
-      console.log('local login');
       // callback with username and password from our form
 
       // find a user whose username is the same as the forms username

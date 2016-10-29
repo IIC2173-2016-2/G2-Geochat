@@ -49,13 +49,9 @@ class Table {
 
   save(entry) {
     const errorString = 'Something went wrong';
-    console.log('in save');
-    console.log(entry);
     return new Promise((resolve, reject) => {
       this.parseAttributesForUpsert(entry, true)
         .then((attributes) => {
-          console.log('----');
-          console.log(attributes);
           this.table().insert(attributes).returning('*').then((entry) => {
               // check if attributes is an array
             if (!entry || entry.length === 0) {
@@ -67,7 +63,6 @@ class Table {
               reject(errorString);
             });
         }).catch((err) => {
-          console.log('hubo en error en parse attr');
           reject(err);
         });
     });
@@ -76,10 +71,10 @@ class Table {
   update(id, attr) {
     const errorString = 'Something went wrong';
     return new Promise((resolve, reject) => {
-      this.findById(id).then((oldEntry) => {
-        if (attr && attr.id && id !== attr.id) {
-          return reject('Given IDs differ');
-        }
+      if (attr && attr.id && id.toString() !== attr.id.toString()) {
+        return reject('Given IDs differ');
+      }
+      this.findById(id).then(() => {
         this.parseAttributesForUpsert(attr, false).then((attributes) => {
           this.table().where({
             id,
@@ -129,7 +124,6 @@ class Table {
   }
 
   find(attributes) {
-    console.log('buscando en table');
     return new Promise((resolve, reject) => {
       this.filterAttributes(attributes)
         .then((filteredAttributes) => {
@@ -185,12 +179,10 @@ class Table {
 
   getAttributesNames() {
     const table_name = this.table_name;
-    console.log(table_name);
     return new Promise((resolve, reject) => {
       knex('information_schema.columns').select('column_name').where({
         table_name,
       }).then((results) => {
-        console.log(results);
           // check if results is an array
         if (!results || results.length === 0) {
           return reject(`Hubo un error creando un nuevo objeto: ${table_name}`);
