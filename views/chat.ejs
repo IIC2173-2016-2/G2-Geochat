@@ -1,5 +1,5 @@
-<!-- views/profile.ejs -->
 <!doctype html>
+<!-- views/profile.ejs -->
 <html>
 
   <head>
@@ -13,12 +13,19 @@
       }
 
     </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="/angular/app.js"></script>
+    <script src="/angular/controllers/controller.js"></script>
+    <script src="/angular/controllers/userController.js"></script>
   </head>
 
-  <body>
+  <body ng-app="app">
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+
     <script>
       var socket = io.connect('http://localhost:3000');
 
@@ -92,15 +99,23 @@
 
             <p>
               <strong>id</strong>:
-              <%= user.id %> <br/>
+              <%= user.id %>
+              <br/>
               <strong>username</strong>:
-              <%= user.username %> <br>
-              <strong>Dirección </strong>:
-              <%= user.address %> <br/>
-              <strong>Grupo Sanguíneo </strong>:
-              <%= user.bloodtype %> <br/>
-              <strong>Fecha de nacimiento: </strong>:
-              <%= user.birthday %> <br/>
+              <%= user.username %>
+              <br>
+              <strong>Dirección
+              </strong>:
+              <%= user.address %>
+              <br/>
+              <strong>Grupo Sanguíneo
+              </strong>:
+              <%= user.bloodtype %>
+              <br/>
+              <strong>Fecha de nacimiento:
+              </strong>:
+              <%= user.birthday %>
+              <br/>
               <strong>arquicoins</strong>:
               <%= user.arquicoins %><br>
             </p>
@@ -116,15 +131,23 @@
 
             <p>
               <strong>id</strong>:
-              <%= user.id %> <br/>
+              <%= user.id %>
+              <br/>
               <strong>username</strong>:
-              <%= user.username %> <br>
-              <strong>Dirección </strong>:
-              <%= user.address %> <br/>
-              <strong>Grupo Sanguíneo </strong>:
-              <%= user.bloodtype %> <br/>
-              <strong>Fecha de nacimiento: </strong>:
-              <%= user.birthday %> <br/>
+              <%= user.username %>
+              <br>
+              <strong>Dirección
+              </strong>:
+              <%= user.address %>
+              <br/>
+              <strong>Grupo Sanguíneo
+              </strong>:
+              <%= user.bloodtype %>
+              <br/>
+              <strong>Fecha de nacimiento:
+              </strong>:
+              <%= user.birthday %>
+              <br/>
               <strong>arquicoins</strong>:
               <%= user.arquicoins %><br>
             </p>
