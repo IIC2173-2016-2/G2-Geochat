@@ -3,6 +3,7 @@
 const chatController = require('./controllers/chat');
 const locateController = require('./controllers/locate');
 const userController = require('./controllers/userController');
+const cardController = require('./controllers/cardController');
 
 module.exports = function router(app, passport) {
   // Geolocation
@@ -65,12 +66,17 @@ module.exports = function router(app, passport) {
     chatController.main(req, res);
   });
   // eslint-disable-next-line
-  app.put('/user/:id/update', hasAccess, (req, res) => {
+  app.post('/user/:id/update', hasAccess, (req, res) => {
     userController.update(req, res);
   });
   // eslint-disable-next-line
   app.get('/user/:id/fetchCards', hasAccess, (req, res) => {
     userController.getKreditCards(req, res);
+  });
+
+  // eslint-disable-next-line
+  app.post('/user/:id/card/new', hasAccess, (req, res) => {
+    cardController.create(req, res);
   });
 
   app.get('/user/:username/exists', (req, res) => {
@@ -90,8 +96,6 @@ module.exports = function router(app, passport) {
 function hasAccess(req, res, next) {
   const urlId = req.params.id.toString();
   const loggedId = req.session.passport.user.toString();
-  console.log(urlId);
-  console.log(loggedId);
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated() && (urlId === loggedId)) {
     return next();

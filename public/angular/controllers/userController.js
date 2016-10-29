@@ -42,7 +42,7 @@ controllers
     $http.get(`/user/${username}/exists`)
       .success(function(data) {
         if (!data.exists || username === $scope.user.username) {
-          $http.put(`/user/${$scope.newUser.id}/update`, $scope.newUser)
+          $http.post(`/user/${$scope.newUser.id}/update`, $scope.newUser)
             .success(function(data) {
               $scope.user = data.user;
               copyJSON($scope.user, $scope.newUser);
@@ -75,7 +75,8 @@ controllers
       });
   }
   $scope.addCard = function() {
-    $http.put(`/user/${$scope.user.id}/addCard`, $scope.newCard)
+      $scope.newCard.user_id = $scope.user.id;
+    $http.post(`/user/${$scope.user.id}/card/new`, $scope.newCard)
       .success(function(data) {
         $scope.cards.push(data.card);
         $scope.newCard = {};

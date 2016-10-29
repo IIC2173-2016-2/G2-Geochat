@@ -37,12 +37,13 @@ exports.update = function (req, res) {
 
 exports.getKreditCards = function (req, res) {
   const urlId = req.params.id.toString();
-  KreditCard.findFromUser(urlId, (err, cards) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
+  KreditCard.find({
+    user_id: urlId,
+  }).then((cards) => {
     return res.status(200).send({
       cards,
     });
+  }).catch((err) => {
+    return res.status(500).send(err);
   });
 };
