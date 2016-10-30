@@ -13,10 +13,10 @@ Crear una bd que se llame geochat en psql. Debe estar en el puerto 5432 (puerto 
 
 Pueden correr en el terminal:
 
-	node database/sql/create.js
+	knex migrate:latest
 	Para crear las tablas necesarias (en este caso es una)
 
-	node database/sql/drop.js
+	node migrate:rollback
 	Borra todo lo que está en la bd pero no la bd.
 
 
