@@ -15,15 +15,14 @@ function geoLocation() {
     // Get nearby places through foursquare api in the backend
     $.get('/geolocate', parameters, (data) => {
       const $places = $('#rooms');
-      // for (const i in data.places) {
-      //   // var $li = $('<li/>');
-      //   // $li.text(data.places[i]);
-      //   const $a = $(`<li> <a href="#" onclick="switchRoom('${data.places[i]}')">${data.places[i]}</a> </li>`);
-      //   $a.appendTo($places);
-      // }
+        $('#rooms').empty();
+        $.each(data.places, function(key, value) {
+            $('#rooms').append('<li><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></li>');
+        });
+
 
       // set the rooms
-      socket.emit('setrooms', data.places);
+      // socket.emit('setrooms', data.places);
     });
 
     const img = new Image();

@@ -1,3 +1,4 @@
+// eslint-disable
 exports.main = function (req, res, coords) {
   const CLIENT_ID = 'DB3WCAB4IXWLMJYXLQNNAGS0BTLFQU4BV053WSERRIW20NKV';
   const CLIENT_SECRET = 'UQDYESVN1EFVYWWLV1V4JAN25C0NHAFX042X2OI1CF1SEW0C';
@@ -11,7 +12,6 @@ exports.main = function (req, res, coords) {
       for (const i in response.response.venues) {
         places.push(response.response.venues[i].name);
       }
-      console.log(places);
       res.send({
         places,
       });

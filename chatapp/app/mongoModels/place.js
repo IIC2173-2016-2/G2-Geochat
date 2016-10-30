@@ -14,16 +14,24 @@ const placeSchema = new Schema({
 placeSchema.methods.registerActivity = function () {
   const currentDate = new Date();
   this.updated_at = currentDate;
+  console.log(this);
+  console.log('----------');
+  this.save((err, data) => {
+    if (err) {
+      return err;
+    }
+    console.log(data);
+  });
 };
 
 placeSchema.pre('save', function (next) {
-    // get the current date
+  // get the current date
   const currentDate = new Date();
 
-    // change the updated_at field to current date
+  // change the updated_at field to current date
   this.updated_at = currentDate;
 
-    // if created_at doesn't exist, add to that field
+  // if created_at doesn't exist, add to that field
   if (!this.created_at) {
     this.created_at = currentDate;
   }
