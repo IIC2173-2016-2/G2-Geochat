@@ -15,18 +15,9 @@ class KreditCards extends Table {
     return new Promise((resolve, reject) => {
       const now = new Date();
       const expire_date = new Date(card.expire_date);
-      console.log('===============================');
-      console.log(now);
-      console.log(expire_date);
-      console.log(now.getTime());
-      console.log(expire_date.getTime());
-      console.log('===============================');
       if (now.getTime() > expire_date.getTime()) {
-        console.log('asdf');
-        console.log(now.getTime() > expire_date.getTime());
         return reject(false, 'it has expired');
       }
-      console.log('resolvio');
       return resolve(card, true);
     });
   }

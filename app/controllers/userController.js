@@ -86,3 +86,23 @@ exports.spendArquicoins = function (req, res) {
     return res.status(400).send(err);
   });
 };
+
+exports.transferArquicoins = function (req, res) {
+  const url_id = req.params.id.toString();
+  const fromId = req.body.fromId.toString();
+  const toId = req.body.toId.toString();
+  const amount = req.body.amount;
+  if (fromId !== url_id || !fromId) {
+    return res.status(400).send('IDs no coinciden');
+  }
+  Transaction.transferArquicoins(fromId, amount, toId).then((user) => {
+    if (!user) {
+      return res.status(500).send('Something went wrong');
+    }
+    return res.status(200).send({
+      user,
+    });
+  }).catch((err) => {
+    return res.status(400).send(err);
+  });
+};

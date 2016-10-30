@@ -164,4 +164,21 @@ controllers
         $scope.moneyMessage = err;
       });
   }
+
+  $scope.transferArquicoins = function() {
+    const id = $scope.user.id;
+    const amount = 50;
+    $http.post(`/user/${id}/transfer/arquicoins`, {
+        fromId: $scope.user.id,
+        toId: 1,
+        amount,
+      })
+      .success(function(data) {
+        $scope.setArquicoins($scope.user.arquicoins - amount);
+      })
+      .error(function(err) {
+        console.log(err);
+        $scope.moneyMessage = err;
+      });
+  }
 });

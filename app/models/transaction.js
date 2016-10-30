@@ -15,14 +15,12 @@ exports.buyArquicoins = function (id, amount) {
       cards.forEach((card) => {
         Kreditcard.isValid(card)
           .then((card) => {
-            console.log(card);
             User.changeArquicoins(id, amount).then((user) => {
               resolve(user);
             }).catch((err) => {
-              console.log('fallo la compra');
               reject(err);
             });
-          }).catch((err) => {
+          }).catch(() => {
             rejected++;
             if (rejected === cards.length) {
               reject('No valid cards');
@@ -34,6 +32,36 @@ exports.buyArquicoins = function (id, amount) {
     });
   });
 };
+
+exports.transferArquicoins = function (id, amount, toId) {
+  return new Promise((resolve, reject) => {
+    if (!utils.isInteger(amount)) {
+      return reject(`Cannot decrease arquicoins by ${amount}. Invalid input`);
+    }
+
+    User.findById(id).then((fromUser) => {
+      if (fromUser.arquicoins < amount) {
+        return reject('not enough money');
+      }
+      User.findById(toId).then((toUser) => {
+        User.changeArquicoins(fromUser.id, -amount).then((user) => {
+          User.changeArquicoins(toUser.id, amount).then(() => {
+            resolve(user);
+          }).catch((err) => {
+            reject(err);
+          });
+        }).catch((err) => {
+          reject(err);
+        });
+      }).catch((err) => {
+        reject(err);
+      });
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+};
+
 
 exports.spendArquicoins = function (id, cost) {
   return new Promise((resolve, reject) => {
