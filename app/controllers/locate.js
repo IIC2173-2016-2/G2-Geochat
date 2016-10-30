@@ -11,6 +11,7 @@ exports.main = function (req, res, coords) {
       for (const i in response.response.venues) {
         places.push(response.response.venues[i].name);
       }
+      console.log(places);
       res.send({
         places,
       });
