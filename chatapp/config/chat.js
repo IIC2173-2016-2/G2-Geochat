@@ -28,7 +28,6 @@ function saveOrUpdatePlace(placeName) {
         if (err) {
           return err;
         }
-        console.log('fiiiin');
       });
     }
   });
@@ -76,7 +75,6 @@ exports.initialize = function (io) {
 
     // when the client emits 'sendchat', this listens and executes
     socket.on('sendchat', (data) => {
-      console.log(socket.room);
       saveOrUpdatePlace(socket.room);
       // we tell the client to execute 'updatechat' with 2 parameters
       io.sockets.in(socket.room).emit('updatechat', socket.username, data);

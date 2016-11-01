@@ -273,21 +273,14 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label>CVV</label>
-                      <input type="text" class="form-control" name="cvv" ng-model="card.cvv">
-                      <div ng-if="!card.cvv" class="alert alert-danger">
-                        Debe tener un cvv
-                      </div>
-                    </div>
-                    <div class="form-group">
                       <label>Fecha expiracion</label>
                       <input type="date" class="form-control" name="expire_date" ng-model="card.expire_date">
                       <div ng-if="!card.expire_date" class="alert alert-danger">
                         Debe tener un fecha de expiración
                       </div>
                     </div>
-                    <a ng-if="!(!card.expire_date || !card.first_name || !card.last_name || !card.cvv || !card.number || !card.operator)" ng-click="updateCard(card)" class=" btn btn-default btn-sm">Guardar Cambios</a>
-                    <a ng-if="!card.expire_date || !card.first_name || !card.last_name || !card.cvv || !card.number || !card.operator" class=" btn btn-default btn-sm" disabled>Guardar Cambios</a>
+                    <a ng-if="!(!card.expire_date || !card.first_name || !card.last_name || !card.number || !card.operator)" ng-click="updateCard(card)" class=" btn btn-default btn-sm">Guardar Cambios</a>
+                    <a ng-if="!card.expire_date || !card.first_name || !card.last_name || !card.number || !card.operator" class=" btn btn-default btn-sm" disabled>Guardar Cambios</a>
                     <a ng-click="toggleEditCard(card)" class=" btn btn-default btn-sm">
                       Cancelar</a>
                   </div>
@@ -313,23 +306,16 @@
               </div>
               <div class="form-group">
                 <label>Nombre</label>
-                <input type="text" class="form-control" name="first_name" ng-model="newCard.first_name">
-                <div ng-if="!newCard.first_name" class="alert alert-danger">
+                <input type="text" class="form-control" name="first_name" ng-model="card.first_name">
+                <div ng-if="!card.first_name" class="alert alert-danger">
                   Debe tener un nombre
                 </div>
               </div>
               <div class="form-group">
                 <label>Apellido</label>
-                <input type="text" class="form-control" name="last_name" ng-model="newCard.last_name">
-                <div ng-if="!newCard.last_name" class="alert alert-danger">
+                <input type="text" class="form-control" name="last_name" ng-model="card.last_name">
+                <div ng-if="!card.last_name" class="alert alert-danger">
                   Debe tener un apellido
-                </div>
-              </div>
-              <div class="form-group">
-                <label>CVV</label>
-                <input type="text" class="form-control" name="cvv" ng-model="newCard.cvv">
-                <div ng-if="!newCard.cvv" class="alert alert-danger">
-                  Debe tener un cvv
                 </div>
               </div>
               <div class="form-group">
@@ -339,8 +325,8 @@
                   Debe tener un fecha de expiración
                 </div>
               </div>
-              <a ng-if="!(!newCard.expire_date || !newCard.first_name || !newCard.last_name || !newCard.cvv  || !newCard.number || !newCard.operator)" ng-click="addCard()" class=" btn btn-default btn-sm">Agregar</a>
-              <a ng-if="!newCard.expire_date || !newCard.first_name || !newCard.last_name || !newCard.cvv  || !newCard.number || !newCard.operator" class=" btn btn-default btn-sm" disabled>Agregar</a>
+              <a ng-if="!(!newCard.expire_date || !card.first_name || !card.last_name || !newCard.number || !newCard.operator)" ng-click="addCard()" class=" btn btn-default btn-sm">Agregar</a>
+              <a ng-if="!newCard.expire_date || !card.first_name || !card.last_name || !newCard.number || !newCard.operator" class=" btn btn-default btn-sm" disabled>Agregar</a>
 
               <a ng-click="toggleNewCardForm()" class=" btn btn-default btn-sm">cancelar</a>
 

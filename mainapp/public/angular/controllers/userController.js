@@ -96,7 +96,7 @@ controllers
         $scope.newCardForm = false;
       })
       .error(function(err) {
-        console.log('meneh');
+        console.log(err);
         $scope.cardMessage = err;
       });
   }
