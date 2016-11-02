@@ -29,7 +29,7 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <script>
-      var socket = io.connect('http://assw5.ing.puc.cl');
+      // var socket = io.connect('http://assw8.ing.puc.cl/chat');
 
       // on connection to server, ask for user's name with an anonymous callback
       socket.on('connect', function () {
@@ -44,14 +44,8 @@
 
       // // listener, whenever the server emits 'updaterooms', this updates the room the client is in
       socket.on('updaterooms', function (rooms, current_room) {
-        // $('#rooms').empty();
-        // $.each(rooms, function (key, value) {
-        //   if (value == current_room) {
-        //     $('#rooms').append('<li>' + value + '</li>');
-        //   } else {
-        //     $('#rooms').append('<li><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></li>');
-        //   }
-        // });
+        // $('#rooms').empty(); $.each(rooms, function (key, value) {   if (value == current_room) {     $('#rooms').append('<li>' + value + '</li>');   } else {     $('#rooms').append('<li><a href="#" onclick="switchRoom(\'' + value + '\')">' + value +
+        // '</a></li>');   } });
       });
 
       function switchRoom(room) {
@@ -81,6 +75,14 @@
     <script src="scripts/locate.js"></script>
 
     <div class="container" ng-controller="userController">
+      <div ng-if="errorMessage" class="alert alert-danger">
+        {{errorMessage}}
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      </div>
+      <div ng-if="successMessage" class="alert alert-success">
+        {{successMessage}}
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      </div>
 
       <div class="page-header text-center">
         <h1>
@@ -97,11 +99,28 @@
               <span class="fa fa-money"></span>
               Comprar Arquicoins</h3>
 
-            <a ng-click="buyArquicoins()" class=" btn btn-default btn-sm">
-              Comprar 100 arquicoins</a>
+              <div ng-if="buyErrorMessage" class="alert alert-danger">
+                {{buyErrorMessage}}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              </div>
+
+            <div class="form-group">
+              <label>Seleccione una tarjeta:</label>
+              <select class="form-control" ng-model="cardToCharge">
+                <option ng-repeat="card in cards" value={{card}}>
+                  {{card.number}}
+                </option>
+              </select>
+            </div>
+
+            <a ng-if="!cardToCharge" class=" btn btn-default btn-sm" disabled>
+              Seleccione una tarjeta para comprar</a>
+              <a ng-if="cardToCharge" ng-click="buyArquicoins()" class=" btn btn-default btn-sm">
+                Comprar 100 arquicoins a $CLP100</a>
 
           </div>
         </div>
+
         <div class="col-sm-4">
           <div class="well">
             <h3>
@@ -121,7 +140,7 @@
               Transferir</h3>
 
             <a ng-click="transferArquicoins()" class=" btn btn-default btn-sm">
-              Transferir  50 arquicoins a user con id 1</a>
+              Transferir 50 arquicoins a user con id 1</a>
 
           </div>
         </div>
@@ -187,7 +206,7 @@
             </div>
             <div class="form-group">
               <label>Fecha nacimiento</label>
-              <input type="date" class="form-control" name="birthday" ng-model="newUser.birthday">
+              <!-- <input type="date" class="form-control" name="birthday" ng-model="newUser.birthday"> -->
             </div>
             <a ng-click="save()" class="btn btn-default btn-sm">Guardar Cambios</a>
             <a ng-click="triggerShowEdit()" class="btn btn-default btn-sm">Cancelar</a>
@@ -236,7 +255,8 @@
                       <li>Fecha de expiración:
                         {{card.expire_date | date}}</li>
                       <li>Nombre en tarjeta:
-                        {{card.first_name}} {{card.last_name}}</li>
+                        {{card.first_name}}
+                        {{card.last_name}}</li>
                     </ul>
                     <a ng-click="toggleEditCard(card)" class=" btn btn-default btn-sm">
                       Editar tarjeta</a>

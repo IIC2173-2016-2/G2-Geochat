@@ -9,13 +9,13 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const mongoose = require('mongoose');
-
-
-// mongodb ==================================================================
-const connectionString = require('./database/mongo//url');
-
-mongoose.connect(connectionString);
+// const mongoose = require('mongoose');
+//
+//
+// // mongodb ==================================================================
+// const connectionString = require('./database/mongo//url');
+//
+// mongoose.connect(connectionString);
 // configuration ===============================================================
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -47,9 +47,9 @@ const io = require('socket.io').listen(server);
 
 server.listen(port);
 
-const chat = require('./config/chat.js');
+// const chat = require('./config/chat.js');
 
-chat.initialize(io);
+// chat.initialize(io);
 app.set('port', port);
 
 

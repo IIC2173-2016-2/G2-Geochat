@@ -52,11 +52,12 @@ exports.getKreditCards = function (req, res) {
 exports.buyArquicoins = function (req, res) {
   const url_id = req.params.id.toString();
   const id = req.body.id.toString();
+  const card_id = req.body.card_id.toString();
   const amount = req.body.amount;
   if (id !== url_id || !id) {
     return res.status(400).send('IDs no coinciden');
   }
-  Transaction.buyArquicoins(id, amount).then((user) => {
+  Transaction.buyArquicoins(id, card_id, amount).then((user) => {
     if (!user) {
       return res.status(500).send('Something went wrong');
     }

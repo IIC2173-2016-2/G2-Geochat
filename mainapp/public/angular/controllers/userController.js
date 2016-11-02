@@ -129,45 +129,62 @@ controllers
   }
 
 
+  function clearMessages() {
+    $scope.errorMessage = null;
+    $scope.successMessage = null;
+  }
 
   ///MONEY
 
   $scope.buyArquicoins = function() {
     const id = $scope.user.id;
     const amount = 100;
+    const card_id = JSON.parse($scope.cardToCharge).id;
+    clearMessages();
     // $scope.setArquicoins(amount);
     $http.post(`/user/${id}/buy/arquicoins`, {
-        id: $scope.user.id,
+        id,
         amount,
+        card_id,
       })
       .success(function(data) {
         $scope.setArquicoins($scope.user.arquicoins + amount);
+        $scope.successMessage = `${amount} Arquicoins bought`;
 
         // $scope.user.arquicoins = data.user.arquicoins;
       })
       .error(function(err) {
-        $scope.moneyMessage = err;
+        $scope.errorMessage = 'Unable to buy arquicoins with that card at this moment';
       });
   }
 
   $scope.spendArquicoins = function() {
     const id = $scope.user.id;
     const cost = 80;
+    clearMessages();
+
     $http.post(`/user/${id}/buy/something`, {
         id: $scope.user.id,
         cost,
       })
       .success(function(data) {
         $scope.setArquicoins($scope.user.arquicoins - cost);
+        $scope.successMessage = `Money well spend`;
       })
       .error(function(err) {
-        $scope.moneyMessage = err;
+        $scope.errorMessage = `Something went wrong, probably you dont have the money`;
       });
   }
 
   $scope.transferArquicoins = function() {
     const id = $scope.user.id;
     const amount = 50;
+    clearMessages();
+    if(id === 1){
+      $scope.errorMessage = 'Cannot transfer to itself';
+      return;
+    }
+
     $http.post(`/user/${id}/transfer/arquicoins`, {
         fromId: $scope.user.id,
         toId: 1,
@@ -175,10 +192,12 @@ controllers
       })
       .success(function(data) {
         $scope.setArquicoins($scope.user.arquicoins - amount);
+        $scope.successMessage = `Money succesfully transfered`;
+
       })
       .error(function(err) {
         console.log(err);
-        $scope.moneyMessage = err;
+        $scope.errorMessage = `Something went wrong, probably you dont have the money or the user doesnot exist`;
       });
   }
 });
