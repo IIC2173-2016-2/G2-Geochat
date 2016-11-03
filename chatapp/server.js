@@ -70,7 +70,9 @@ app.use(express.static('public'));
 const http = require('http');
 
 const server = http.createServer(app);
-const io = require('socket.io').listen(server);
+const io = require('socket.io').listen(server, {
+  origins: '*:*'
+});
 
 server.listen(port);
 
