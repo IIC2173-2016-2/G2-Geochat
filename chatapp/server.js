@@ -13,9 +13,40 @@ const mongoose = require('mongoose');
 
 
 // mongodb ==================================================================
-const connectionString = require('./database/mongo//url');
+// const connectionString = require('./database/mongo//url');
+//
+// mongoose.connect(connectionString);
 
-mongoose.connect(connectionString);
+
+const connectionString = require('./database/mongo//url');
+const url = 'mongodb://assw5.ing.puc.cl:27017,assw6.ing.puc.cl:27017,assw7.ing.puc.cl:27017/?replicaSet=rs0&connectTimeoutMS=10000';
+const options = {
+
+  db: {
+    native_parser: true,
+  },
+
+    // This block gets run for a non replica set connection string (eg. localhost with a single DB)
+  server: {
+    poolSize: 5,
+    socketOptions: {
+      keepAlive: 1000,
+      connectTimeoutMS: 30000,
+    },
+  },
+
+    // This block gets run when the connection string indicates a replica set (comma seperated connections)
+  replset: {
+    auto_reconnect: false,
+    poolSize: 10,
+    socketOptions: {
+      keepAlive: 1000,
+      connectTimeoutMS: 30000,
+    },
+  },
+};
+
+mongoose.connect(url, options);
 // configuration ===============================================================
 
 
