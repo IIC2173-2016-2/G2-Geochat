@@ -80,7 +80,7 @@ chat.initialize(io);
 app.set('port', port);
 
 
-const minutes = 24 * 60;
+const minutes = 0.5;
 const the_interval = minutes * 60 * 1000;
 setInterval(() => {
   const cutOff = new Date(new Date().getTime() - the_interval);
