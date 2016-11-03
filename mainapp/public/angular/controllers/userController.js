@@ -5,6 +5,7 @@ controllers
   .controller('userController', function($scope, $http) {
   $scope.showEdit = false;
   $scope.newCardForm = false;
+  $scope.users;
 
   $scope.user;
   $scope.newUser;
@@ -15,7 +16,6 @@ controllers
   $scope.initialize = function functionName(user) {
     $scope.user = JSON.parse(user);
     $scope.newUser = copyJSON($scope.user);
-    console.log($scope.newUser);
     $scope.newUser.birthday = new Date($scope.newUser.birthday);
   }
 
@@ -25,6 +25,13 @@ controllers
       toJSON[key] = fromJSON[key];
     })
     return toJSON;
+  }
+   $scope.setUsers = function(users) {
+    console.log(users);
+    // $scope.users = JSON.parse(users);
+    console.log(users);
+    console.log($scope.users);
+
   }
 
   $scope.setArquicoins = function(amount) {
@@ -180,14 +187,18 @@ controllers
     const id = $scope.user.id;
     const amount = 50;
     clearMessages();
-    if(id === 1){
+    if(id === $scope.transferID){
       $scope.errorMessage = 'Cannot transfer to itself';
+      return;
+    }
+    if(!$scope.transferID){
+      $scope.errorMessage = 'No one selected';
       return;
     }
 
     $http.post(`/user/${id}/transfer/arquicoins`, {
         fromId: $scope.user.id,
-        toId: 1,
+        toId: $scope.transferID,
         amount,
       })
       .success(function(data) {

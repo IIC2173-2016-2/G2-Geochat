@@ -137,10 +137,18 @@
           <div class="well">
             <h3>
               <span class="fa fa-exchange"></span>
-              Transferir</h3>
+              Transferir a:</h3>
+
+              <select class="form-control" ng-model="transferID">
+                <% for (let i = 0; i < users.length; i++) { %>
+                  <option value='<%=users[i].id %>'>
+                    <%= users[i].username %>
+                  </option>
+                <% } %>
+              </select>
 
             <a ng-click="transferArquicoins()" class=" btn btn-default btn-sm">
-              Transferir 50 arquicoins a user con id 1</a>
+              Transferir 50 arquicoins a user con id {{transferID}}</a>
 
           </div>
         </div>
