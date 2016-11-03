@@ -29,7 +29,7 @@
     <script src="/socket.io/socket.io.js"></script>
 
     <script>
-      var socket = io.connect('http://assw7.ing.puc.cl/');
+      var socket = io.connect('http://assw8.ing.puc.cl/');
 
       // on connection to server, ask for user's name with an anonymous callback
       socket.on('connect', function () {
@@ -301,7 +301,7 @@
                     </div>
                     <div class="form-group">
                       <label>Fecha expiracion</label>
-                      <input type="date" class="form-control" name="expire_date" ng-model="card.expire_date">
+                      <input type="date" class="form-control" name="expire_date" placeholder="1979-12-31" ng-model="card.expire_date">
                       <div ng-if="!card.expire_date" class="alert alert-danger">
                         Debe tener un fecha de expiración
                       </div>
@@ -354,7 +354,7 @@
               </div>
               <div class="form-group">
                 <label>Fecha expiracion</label>
-                <input type="date" class="form-control" name="expire_date" ng-model="newCard.expire_date">
+                <input placeholder="1979-12-31" type="date" class="form-control" name="expire_date" ng-model="newCard.expire_date">
                 <div ng-if="!newCard.expire_date" class="alert alert-danger">
                   Debe tener un fecha de expiración
                 </div>
