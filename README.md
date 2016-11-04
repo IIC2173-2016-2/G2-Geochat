@@ -1,5 +1,4 @@
 #GeoChat
-----------
 Aplicación web para compartir con personas a tu alrededor.
 
 ## Para hacerlo funcionar deben:
