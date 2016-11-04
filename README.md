@@ -1,5 +1,5 @@
 #GeoChat
-Aplicación web para compartir con personas a tu alrededor.
+Aplicación web para chatear con personas a tu alrededor. Permite hacer check-in en lugares cercanos a tu ubicación y chatear con personas en el mismo lugar. Está conectada con la API de foursquare para encontrar lugares y se recomienda el uso de Firefox.
 
 ## Para hacerlo funcionar deben:
 
@@ -43,6 +43,6 @@ y después
 
 npm start
 
-## Ver Página 
+## Información Página 
 
-Webpage: http://assw8.ing.puc.cl/
+Ingresar: http://assw8.ing.puc.cl/
