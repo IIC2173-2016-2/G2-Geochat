@@ -1,0 +1,38 @@
+{
+  "name": "tutorial",
+  "version": "0.0.0",
+  "main": "server.js",
+  "private": true,
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "~1.15.1",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "~1.4.3",
+    "csv-parse": "^1.1.7",
+    "debug": "~2.2.0",
+    "ejs": "~0.8.5",
+    "express": "~4.13.4",
+    "express-session": "~1.0.0",
+    "knex": "^0.10.0",
+    "method-override": "~1.0.0",
+    "mongodb": "^2.2.10",
+    "mongoose": "~3.8.1",
+    "morgan": "~1.7.0",
+    "node-foursquare-venues": "latest",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "pg": "^4.5.3",
+    "requestify": "^0.2.5",
+    "serve-favicon": "~2.3.0",
+    "socket.io": "^1.5.0",
+    "socket.io-client": "^1.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-config-google": "^0.6.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1"
+  }
+}
