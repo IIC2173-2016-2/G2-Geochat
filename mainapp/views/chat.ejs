@@ -39,7 +39,15 @@
 
       // listener, whenever the server emits 'updatechat', this updates the chat body
       socket.on('updatechat', function (username, data) {
-        $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
+        var message = $('#data').val();
+
+        text = $('<span></span>').text(message);
+        user = $('<b> </b>').text('me: ');
+        div = $('<div> </div>');
+
+        div = div.append(user);
+        div = div.append(text);
+        $('#conversation').append(div);
       });
 
       // // listener, whenever the server emits 'updaterooms', this updates the room the client is in
