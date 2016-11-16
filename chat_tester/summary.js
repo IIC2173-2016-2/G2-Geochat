@@ -19,12 +19,10 @@ function addData(row) {
 }
 
 function printData() {
+  console.log('username, promedio, total, mensajes');
   for (let i = 0; i < Object.keys(data).length; i++) {
     const username = Object.keys(data)[i];
-    console.log('-------------------------------------------------------');
-    console.log(`De usuario ${username} llegaron ${data[username].times} mensajes en ${data[username].sum} ms`);
-    console.log(`Promedio: ${data[username].sum / data[username].times} ms`);
-    console.log('-------------------------------------------------------');
+    console.log(`${username},${data[username].sum / data[username].times}, ${data[username].times}, ${data[username].sum}`);
   }
 }
 
