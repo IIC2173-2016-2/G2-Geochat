@@ -1,4 +1,4 @@
-const express = require('newrelic');
+const newrelic = require('newrelic');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
