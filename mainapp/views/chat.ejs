@@ -39,12 +39,15 @@
 
       // listener, whenever the server emits 'updatechat', this updates the chat body
       socket.on('updatechat', function (username, data) {
-        var message = $('#data').val();
+        // var message = $('#data').val();
 
-        text = $('<span></span>').text(message);
-        user = $('<b> </b>').text('me: ');
+        text = $('<span></span>').text(data);
+        user = $('<b> </b>').text(`${username}: `);
         div = $('<div> </div>');
 
+        // console.log(message);
+        console.log('-----------------------');
+        console.log(data);
         div = div.append(user);
         div = div.append(text);
         $('#conversation').append(div);
