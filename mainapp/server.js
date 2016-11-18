@@ -1,6 +1,6 @@
 var atatus = require("atatus-node");
 atatus.start({ apiKey: "e57e4c4ee40c48dd99d11ce686da4e32" });
-const newrelic = require('newrelic');
+//const newrelic = require('newrelic');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
